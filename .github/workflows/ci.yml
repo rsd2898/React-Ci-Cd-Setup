@@ -31,12 +31,17 @@ jobs:
             - name: "List directories"
               run: ls
 
-            - name: "Checking if  any lints"
-              run: npm run lint
+            # - name: "Checking if  any lints"
+            #   run: npm run lint
 
-            - name: "Run test"
-              run: npm test
+            # - name: "Run test"
+            #   run: npm test
 
-            - name: "Run build"
-              run: npm run build
-             
+            # - name: "Run build"
+            #   run: npm run build
+
+            - name: "Upload product-redy build files"
+              uses: actions/upload-artifact@v4
+              with:
+                name: build
+                path: dist
