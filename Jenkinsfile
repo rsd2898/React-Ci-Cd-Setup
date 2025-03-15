@@ -1,10 +1,27 @@
 pipeline {
     agent any 
+    options {
+        skipDefaultCheckout(true)
+    }
     stages{
+
+        stage ('clean workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage ('Checkout using SCM') {
+            steps {
+                checkout scm 
+            }
+        }
+
+
         stage('Build') {
             agent {
                 docker{
-                    image 'node:22.11.0-alpine3.20'
+                    image 'node:20.19.0-alpine'
                     args '-u root'
                     reuseNode true  //reuse the node for the next stages
                 }
