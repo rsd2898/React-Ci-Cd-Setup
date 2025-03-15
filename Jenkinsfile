@@ -3,27 +3,25 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
-    stages{
+    stages {
 
-        stage ('clean workspace') {
+        stage('clean_workspace') {
             steps {
                 cleanWs()
             }
         }
 
-        stage ('Checkout using SCM') {
+        stage('checkout_using_scm') {
             steps {
                 checkout scm 
             }
         }
 
-
-        stage('Build') {
+        stage('build') {
             agent {
-                docker{
+                docker {
                     image 'node:20.19.0-alpine'
-                    args '-u root'
-                    reuseNode true  //reuse the node for the next stages
+                    reuseNode true  // Reuse the node for the next stages
                 }
             }
 
@@ -35,27 +33,21 @@ pipeline {
                     npm install
                     npm run build
                     ls -l
-
                 '''
             }
         }
 
-        
-        stage('Test') {
+        stage('test') {
             agent {
-                docker{
+                docker {
                     image 'node:20.19.0-alpine'
-                    args '-u root'
-                    reuseNode true  //reuse the node for the next stages
+                    reuseNode true  // Reuse the node for the next stages
                 }
             }
 
             steps {
-                sh '''
-                    
+                sh '''                  
                     npm run test
-                 
-
                 '''
             }
         }
